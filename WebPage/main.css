@@ -1,0 +1,40 @@
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+}
+body::-webkit-scrollbar{
+    display: none;
+}
+body{
+background-color: #A3BAC3;
+}
+h1{
+    font-size: 7vh;
+    font-family: 'Bebas Neue', sans-serif;
+    margin-left: 10vh;
+
+}
+.menu{
+    background-color: #006989;
+    min-height: 10vh;
+}
+.footer{
+    min-height: 5vh;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #EAEBED;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+.footer p{
+    text-align: center;
+}
+
+
+
+  

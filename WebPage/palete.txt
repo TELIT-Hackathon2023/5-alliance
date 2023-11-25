@@ -1,0 +1,13 @@
+collor pallete>
+
+#6F2DBD Grape
+#A663CC Amethyst
+#B298DC Wisteria
+#B8D0EB Columbia blue
+#B9FAF8 Celeste
+
+#EAEBED  anti flash white
+#006989 Cerulean blue
+#A3BAC3 Cadet gray
+#007090 Cerulean blue svetlejsia
+#01A7C2 Moonstone blue
