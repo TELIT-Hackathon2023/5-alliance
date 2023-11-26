@@ -1,0 +1,44 @@
+body{
+background-color: #A3BAC3;
+}
+h1{
+    font-size: 7vh;
+    font-family: 'Bebas Neue', sans-serif;
+    margin-left: 10vh;
+    width: 50%;
+
+}
+.menu{
+    background-color: #006989;
+    min-height: 10vh;
+}
+.footer{
+    min-height: 5vh;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #EAEBED;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+.footer p{
+    text-align: center;
+}
+form a{
+    position:absolute;
+    float: right;
+    text-decoration: none;
+    font-size: 7vh;
+    font-family: 'Bebas Neue', sans-serif;
+    margin-left: 10vh;
+    top: 1vh;
+    right: 3vh;
+}
+
+
+
+
+  
