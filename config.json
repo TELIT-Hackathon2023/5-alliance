@@ -1,11 +1,11 @@
 {
-    "username": "user",
-    "password": "user",
+    "username": "admin",
+    "password": "admin",
     "mysql": {
-      "host": "192.168.1.105",
-      "port": 3306,
-      "database": "moduls",
-      "user": "root",
-      "password": "root"
+      "host": "parking-patrik-0978.a.aivencloud.com",
+      "port": 20274,
+      "database": "defaultdb",
+      "user": "avnadmin",
+      "password": "AVNS_hkWeyVpMkWsO2W5KuMo"
     }
   }
