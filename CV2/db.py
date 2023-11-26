@@ -1,44 +1,75 @@
-import mysql.connector
+import pymysql
 
-
-
-# Setup
-host = "/database/parking.sql"
-table = "area_1"
-user = "root"
-password = "Salama123*"
-
-def connect():
-    conn = mysql.connector.connect(host=host,
-                                        database=database,
-                                        user=user,
-                                        password=password,
-                                        )
+def db_connect():
+    """
+    Establishes a connection to the MySQL database and returns the connection and cursor objects.
+    
+    :return: conn, cursor
+    """
+    conn = pymysql.connect(
+        charset="utf8mb4",
+        connect_timeout=10,
+        cursorclass=pymysql.cursors.DictCursor,
+        db="defaultdb",
+        host="parking-patrik-0978.a.aivencloud.com",
+        password="AVNS_hkWeyVpMkWsO2W5KuMo",
+        read_timeout=10,
+        port=20274,
+        user="avnadmin",
+        write_timeout=10,
+    )
     cursor = conn.cursor()
+    print("connected")
+    return conn, cursor
 
-    return cursor
+def db_disconnect(conn):
+    """Closes the provided database connection."""
+    conn.close()
 
-def write_data(cursor, name):
-    insert_data_query ="INSERT INTO {table} VALUES (%s)"
-    data_to_insert = (name,)
-    cursor.execute(insert_data_query, data_to_insert)
+def describe(cursor, table):
+    """Prints the structure of the specified table using the provided cursor."""
+    cursor.execute(f"DESCRIBE {table}")
+    table_structure = cursor.fetchall()
+    print(f"Structure of '{table}' table:")
+    for column_info in table_structure:
+        print(column_info['Field'], column_info['Type'])
 
-def read_data(cursor):
-    cursor.execute("SELECT * FROM {table}")
-    return cursor.fetchall()
+def printer(cursor, table):
+    """Prints the data in the specified table using the provided cursor."""
+    cursor.execute(f"SELECT * FROM {table}")
+    print(f"Data in '{table}':", cursor.fetchall())
 
-def disconnect(cursor):
-    cursor.close()
+def find_user(cursor, spz):
+    """
+    Finds and returns a user based on the provided SPZ (license plate) using the provided cursor.
+    Returns None if no user is found.
 
-# Example usage
-if __name__ == "__main__":
-    # Connect to the MySQL server
-    cursor = connect()
+    :return: dict(user) - [The user information as a dictionary]
+    """
+    user = ' '
+    counter = 0
 
-    # Read and print all data from the table
-    data = read_data(cursor)
-    for row in data:
-        print(row)
+    query = "SELECT * FROM users"
+    cursor.execute(query)
 
-    # Close the cursor and connection
-    disconnect(cursor)
+    users = cursor.fetchall()
+    for x in users:
+        for y in range(7):
+            if(x['spz'][y] == spz[y]):
+                counter += 1
+        if(counter > 4):
+            user = x['id']
+            break
+    if counter > 4:
+        return user, True
+    return user, False
+
+def change_status(conn, cursor, user):
+    query = "SELECT * FROM area_1 WHERE pid = {}".format(user)
+    cursor.execute(query)
+
+    spot = cursor.fetchone()
+
+    query = "UPDATE area_1 SET status = 1 WHERE pid ={}".format(spot)
+    cursor.execute(query)
+    conn.commit()

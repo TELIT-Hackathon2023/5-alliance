@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../WebPage/css/main.css">
+    <link rel="stylesheet" href="../WebPage/css/profile.css">
+    <link rel="stylesheet" href="../WebPage/css/propperties.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="../WebPage/img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@200&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <title>Alliance Parking</title>
+</head>
+
+<body>
+<!-- menu -->
+    <div class="menu">
+        <div class="col-12">
+            <img style="height:9vh;width:9vh;float:left;"src="../WebPage/img/logo.png" alt="logo">
+            <h1>Alliance Parking</h1>
+            <form action="/parking" method="POST">
+                <button type="submit" name="homeBtn" value="<%= id %>">Home</button>
+            </form>
+        </div>
+    </div>
+<!-- Parking space selection -->
+<div class="body">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="login">
+           
+            <div class="login_text">
+                <p>YOUR PROFILE</p>
+            </div>
+            <img style="display: block;height: 15vh;margin-right: auto;margin-left: auto;" src="../WebPage/img/logo.png" alt="user">
+            <div class="profile_row">
+                <label for="fname">First name:</label><br>
+                <p id="fname" name="fname"> <%= user.name %></p>
+            </div>
+            <div class="profile_row">
+                <label for="lname">Last name:</label><br>
+                <p id="lname" name="name"><%= user.surname %></p>
+            </div>
+            <div class="profile_row">
+                <label for="tel">Telephone number:</label><br>
+                <p id="tel" name="tel"><%= user.phone_num %></p>
+            </div>
+            <div class="profile_row">
+                <label for="mail">Email</label><br>
+                <p id="mail" name="mail"><%= user.email %></p>
+            </div>
+            <div class="profile_row">
+                <label for="pid">Personal ID:</label><br>
+                <p id="pid" name="pid"><%= user.pid %></p>
+            </div>
+            <div class="profile_row">
+                <form action="/editSpz" method="POST">
+                    <label for="ecv">ECV:</label><br>
+                    <input type="text" name="spz"  placeholder="ECV" value="<%= user.spz %>">
+                    <button type="submit" name="editBtn" value="<%= id %>">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Meno, Priezvisko, Tel. č., firemný email, PID, ŠPZ(editovateľná uzivateľom)-->
+<!-- footer -->
+    <div class="footer">
+        <div class="col-12">
+            <p>Alliance Parking &copy</p>
+        </div>
+    </div>
+<script>
+    
+
+
+</script>
+</body>
+</html>

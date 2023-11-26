@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../WebPage/css/main.css">
+    <link rel="stylesheet" href="../WebPage/css/parking.css">
+    <link rel="stylesheet" href="../WebPage/css/propperties.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="../WebPage/img/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@200&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <title>Alliance Parking</title>
+</head>
+<script>
+    $(document).ready(function () {
+        // Attach click event handler to all cells with IDs starting with a letter
+        $('td[id^="[A-E]"]').click(function () {
+            // Extract the ID from the clicked cell
+            var spotId = $(this).find('p').text();
+
+            // Get the associated hidden input value (ID)
+            var spotInputId = $(this).next('input[type=hidden]').val();
+
+            // Log the selected spot and its associated ID
+            console.log('Selected spot:', spotId);
+            console.log('Associated ID:', spotInputId);
+
+            // Send an AJAX request to the server with the selected spot ID
+            $.post('/updateParkingSpot', { spotId: spotInputId }, function (response) {
+                console.log('Server response:', response);
+
+                // Update the selected spot message on the page
+                $('#selectedSpot').text('Selected spot: ' + spotId);
+            });
+        });
+    });
+</script>
+<body>
+<!-- menu -->
+    <div class="menu">
+        <div class="col-12">
+            <img style="height:9vh;width:9vh;float:left;"src="../WebPage/img/logo.png" alt="logo">
+            <h1>Alliance Parking</h1>
+            <form action="/profile" method="POST">
+                <button type="submit" id="profileBtn"name="profileBtn" value="<%= id %>">Profile</button>
+            </form>
+        </div>
+    </div>
+<!-- Parking space selection -->
+    <!-- <div class="header"> -->
+        <div class="col-12"><p>Choose a parking spot</p></div>
+        
+    </div>
+    <div class="selection">
+        <div class="col-1"></div>
+        <div class="col-6">
+            <table>
+                <tr>
+                    <td id="A1"><p>A1</p></td>
+                    <input type="hidden" name="1" id="1" value="<%= area_1[0].id %>">
+                    <td id="B1"><p>B1</p></td>
+                    <input type="hidden" name="2" id="2" value="<%= area_1[1].id %>">
+                    <td id="C1"><p>C1</p></td>
+                    <input type="hidden" name="3" id="3" value="<%= area_1[2].id %>">
+                    <td id="D1"><p>D1</p></td>
+                    <input type="hidden" name="4" id="4" value="<%= area_1[3].id %>">
+                    <td id="E1"><p>E1</p></td>
+                    <input type="hidden" name="5" id="5" value="<%= area_1[4].id %>">
+                </tr>
+                <tr>
+                    <td id="A2"><p>A2</p></td>
+                    <input type="hidden" name="6" id="6" value="<%= area_1[5].id %>">
+                    <td id="B2"><p>B2</p></td>
+                    <input type="hidden" name="7" id="7" value="<%= area_1[6].id %>">
+                    <td id="C2"><p>C2</p></td>
+                    <input type="hidden" name="8" id="8" value="<%= area_1[7].id %>">
+                    <td id="D2"><p>D2</p></td>
+                    <input type="hidden" name="9" id="9" value="<%= area_1[8].id %>">
+                    <td id="E2"><p>E2</p></td>
+                    <input type="hidden" name="10" id="10" value="<%= area_1[9].id %>">
+                </tr>
+                <tr>
+                    <td id="A3"><p>A3</p></td>
+                    <input type="hidden" name="11" id="11" value="<%= area_1[10].id %>">
+                    <td id="B3"><p>B3</p></td>
+                    <input type="hidden" name="11" id="11" value="<%= area_1[11].id %>">
+                    <td id="C3"><p>C3</p></td>
+                    <input type="hidden" name="12" id="12" value="<%= area_1[12].id %>">
+                    <td id="D3"><p>D3</p></td>
+                    <input type="hidden" name="13" id="13" value="<%= area_1[13].id %>">
+                    <td id="E3"><p>E3</p></td>
+                    <input type="hidden" name="14" id="14" value="<%= area_1[14].id %>">
+                </tr>
+            </table>
+        </div>
+
+<p id="p_name">Parking spot: </p>
+
+<script>
+    $(document).ready(function () {
+        $(".parking-spot").click(function () {
+            var spotId = $(this).data("spot");
+            $("#p_name").text("Parking spot: " + spotId);
+
+            // Send an AJAX request to the server with the selected spot
+            $.post('/updateParkingSpot', { spot: spotId }, function (response) {
+                console.log('Server response:', response);
+            });
+        });
+    });
+</script>
+
+        <form action="/booking" method="POST">
+            <div class="col-4">
+                <div class="parking_info">
+                    <p id="p_name">Parking spot: </p>
+
+
+                    <p class="p_info">Name: <%= user.name %> <%= user.surname %> </p>
+                    <form action="">
+                      <input class="p_info" name="time" placeholder="Select time"></input>
+                      <input class="p_info" name="date" placeholder="Select date"></input><br>
+                      <button type="submit" id="reserveBtn"name="reserveBtn" value="<%= id %>">Reserve</button>
+                    </form>
+                    <p class="p_info"> licence plate: <%= user.spz %> </p>
+                    
+
+                    <p class="p_info">From:</p>
+                    <input type="text">
+                    <p class="p_info">To:</p>
+                    <input type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+<!-- footer -->
+    <div class="footer">
+        <div class="col-12">
+            <p>Alliance Parking &copy</p>
+        </div>
+    </div>
+
+    <!-- store psw -->
+    <form id="setPswForm" action="/setPsw" method="POST">
+        <input type="hidden" name="pswInput" id="pswInput" value="">
+        <input type="hidden" name="idd" id="idd" value="<%= id %>">
+    </form>
+</body>
+</html>
+

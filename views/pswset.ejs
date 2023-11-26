@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>LogIn</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- style -->
+        <style>
+            .user-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-49%, -49%);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="user-container">
+            <form action="/setPsw" method="POST">
+                <center>
+                    <h3>CREATE PASSWORD</h3>
+                    <!-- input psw -->
+                    <input type="text" placeholder="password" name="password" id="password" required>
+                        <br>
+                        <br>
+                    <!-- send button -->
+                    <button onclick="check_psw()" type="submit"  name="pswBtn" id="pswBtn" value="<%= id %>">Login</button>
+                </center>
+            </form>
+        </div>
+        <script>
+            function check_psw(){
+                var psw = document.getElementById('password');
+                if(psw === ""){
+                    alert("TREBA ZADAT HESLO!");
+                    event.preventDefault();
+                }
+            }
+        </script>
+    </body>
+</html>

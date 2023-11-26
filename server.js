@@ -46,6 +46,20 @@ function loadUsers(){
 };
 loadUsers();
 
+function loadArea_1(){
+    conn.query(`SELECT * FROM area_1`, (err, result) => {
+        if (err) throw err;
+        //global.area_1 = [];
+        global.area_1 = [];
+        for (i=0; i<result.length; i++) {
+            // set areas
+            area_1.push(result[i]);
+        }
+        console.log(global.area_1)
+    });
+};
+loadArea_1();
+
 // server listen
 server.listen(port, () => {
     console.log("app is listening.. on port", port);
@@ -63,12 +77,23 @@ app.post('/', (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var founded = false;
-    if(username != "" && password != ""){
+    if(username != ""){
         for(i=0; i<global.users.length; i++){
-            if(username === global.users[i].name && password === global.users[i].password){
+            if(username === config.username && password === config.password){
+                founded = true;
+                res.render('admin');
+                break;
+            } else if(username == global.users[i].name && global.users[i].password == null){
                 founded = true;
                 var id = global.users[i].id;
-                res.render('parking', { id : id });
+                console.log("1");
+                res.render('pswset', { id: id });
+                break;
+            } else if(username === global.users[i].name && password === global.users[i].password){
+                founded = true;
+                var id = global.users[i].id;
+                var user = global.users[id - 1];
+                res.render('parking', { id: id, user: user });
                 break;
             }
         }
@@ -107,5 +132,56 @@ app.post('/editSpz', (req, res) => {
 // main page
 app.post('/homeBtn', (req, res) => {
     var id = req.body.homeBtn;
-    res.render('parking', { id: id });
+    var user = global.users[id - 1];
+    res.render('parking', { id: id, user: user });
+});
+
+app.post('/addUser', (req, res) => {
+    var fname = req.body.fname;
+    var lname = req.body.lname;
+    var tel = req.body.tel;
+    var email = req.body.email;
+    var pid = req.body.pid;
+    var ecv = req.body.ecv;
+    conn.query(`INSERT INTO users (name, surname, email, phone_num, spz, pid) VALUES('${fname}','${lname}','${email}','${tel}','${ecv}','${pid}')`, (err) => {
+        if(err) throw err;
+        console.log('user created');
+        conn.query(`ALTER TABLE users AUTO_INCREMENT = 1;`, (err) => {
+            if (err) throw err;
+            loadUsers();
+            setTimeout(() => {
+                res.render('admin');
+            },500);
+        });
+    });
+});
+
+app.post('/setPsw', (req, res) => {
+    var psw = req.body.password;
+    var id = req.body.pswBtn;
+    conn.query(`UPDATE users SET password = '${psw}' WHERE id = ${id}`, (err) => {
+        if (err) throw err;
+        console.log('psw set!');
+        loadUsers();
+        setTimeout(() => {
+            var user = global.users[id - 1];
+            res.render('parking', { id: id, user: user });
+        }, 300)
+    });
+});
+
+app.post('/booking', (req, res) => {
+    var from = req.body.timeFrom;
+    var to = req.body.timeTo;
+    
+});
+
+app.post('/updateParkingSpot', (req, res) => {
+    const id = req.body.spotId;
+    // Process the selected spot on the server as needed
+    console.log('Selected spot:', id);
+    conn.query(`UPDATE area_1 SET occupied_from = '${from}', occupied_to = '${to}',  WHERE id = ${id}`, (err) => {
+        if(err)throw err;
+    });
+    res.json(global.area_1);
 });
